@@ -1,0 +1,14 @@
+class Solution {
+    int max = 0;
+    public boolean isBalanced(TreeNode root) {
+        depth(root);
+        return max <= 1; 
+    }
+    public int depth(TreeNode root) {
+        if(root==null) return 0;
+        int left = depth(root.left);
+        int right = depth(root.right);
+        max = Math.max(Math.abs(left-right), max);
+        return 1 + Math.max(left, right);
+    }
+}
