@@ -1,2 +1,3 @@
 What You'll Learn
+
 Java Programming Fundamentals: Get a strong foundation in Java syntax, variables, data types, operators, control flow, object-oriented programming concepts, and more. Data Structures: Explore essential data structures like arrays, linked lists, stacks, queues, trees, and graphs, and understand how to choose the right structure for different tasks. Algorithms: Learn fundamental algorithms like sorting, searching, recursion, dynamic programming, and graph algorithms, and gain the ability to solve real-world problems efficiently. Problem-Solving Skills: Develop your problem-solving skills through hands-on coding exercises and challenges. Coding Best Practices: Learn best practices for writing clean, efficient, and maintainable Java code.
