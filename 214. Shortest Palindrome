@@ -1,0 +1,28 @@
+public class Shortest_Palindrome {
+
+
+    public class Solution {
+        public String shortestPalindrome(String s) {
+
+            if (s == null || s.length() == 0) {
+                return "";
+            }
+
+            int i = 0, n = s.length();
+            for (int j = n - 1; j >= 0; --j) { // @note: j will cross i, eg. making i=2 for "adcba"
+                if (s.charAt(i) == s.charAt(j)) {
+                    ++i;
+                }
+            }
+            // now [0, i) is a possible palindrome, but need extra check
+            if (i == n) {
+                return s;
+            }
+
+            String remaining = s.substring(i); // need to add reverse part of it
+            String rem_rev = new StringBuilder(remaining).reverse().toString();
+            return rem_rev + shortestPalindrome(s.substring(0, i)) + remaining;
+
+        }
+    }
+}
