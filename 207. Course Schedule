@@ -1,0 +1,25 @@
+public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if (prerequisites == null || prerequisites.length == 0) return true;
+        int n = numCourses;
+        int[] vis = new int[n];
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < n; ++i) map.put(i, new ArrayList<Integer>());
+        for (int[] p : prerequisites) {
+            map.get(p[1]).add(p[0]);
+        }
+        for (int i = 0; i < n; ++i) {
+            if (!dfs(i, vis, map)) return false;
+        }
+        return true;
+    }
+
+    private boolean dfs(int i, int[] vis, Map<Integer, List<Integer>> map) {
+        if (vis[i] == 1) return false;
+        if (vis[i] == 2) return true;
+        vis[i] = 1;
+        for (int next : map.get(i)) {
+            if (!dfs(next, vis, map)) return false;
+        }
+        vis[i] = 2;
+        return true;
+    }
