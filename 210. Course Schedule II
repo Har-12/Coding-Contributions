@@ -1,0 +1,30 @@
+int[] courses = new int[numCourses];
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i=0; i<numCourses; i++){
+            map.put(i, new ArrayList<>());
+        }
+        for(int[] pre: prerequisites){
+            int c = pre[0], p = pre[1];
+            courses[c]++;
+            map.get(p).add(c);
+        }
+        
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<courses.length; i++){
+            if(courses[i] == 0) q.offer(i);
+        }
+        int[] res = new int[courses.length];
+        int total = 0;
+        while(q.size() > 0){
+            int size = q.size();
+            while(size > 0){
+                int pre = q.poll();
+                res[total++] = pre;
+                for(int c: map.get(pre)){
+                    if(--courses[c] == 0) q.offer(c);
+                }
+                size--;
+            }
+        }
+        if(total != numCourses) return new int[0]; 
+        return res;
