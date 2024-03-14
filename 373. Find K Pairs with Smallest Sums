@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>((int[] a, int[] b) -> a[0] - b[0]);
+        for(int i = 0; i < nums1.length; i++){
+            queue.offer(new int[]{nums1[i] + nums2[0], i, 0});
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        while(k > 0){
+            int[] poll = queue.poll();
+            int index1 = poll[1];
+            int index2 = poll[2];
+            List<Integer> list = new ArrayList<>();
+            list.add(nums1[index1]);
+            list.add(nums2[index2]);
+            res.add(list);
+            k--;
+            if(index2 + 1 < nums2.length){
+                queue.offer(new int[]{nums1[index1] + nums2[index2 + 1], index1, index2 + 1});
+            }
+        }
+        return res;
+    }
+}
