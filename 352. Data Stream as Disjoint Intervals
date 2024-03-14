@@ -1,0 +1,38 @@
+import java.util.*;
+
+class SummaryRanges {
+    private TreeSet<int[]> intervals;
+
+    public SummaryRanges() {
+        intervals = new TreeSet<>((a, b) -> a[0] - b[0]);
+    }
+    
+    public void addNum(int value) {
+        int[] newInterval = new int[]{value, value};
+        int[] floor = intervals.floor(newInterval);
+        int[] ceiling = intervals.ceiling(newInterval);
+        
+        if (floor != null && floor[1] + 1 >= value) {
+            floor[1] = Math.max(floor[1], value);
+            mergeIntervals(floor);
+        } else if (ceiling != null && ceiling[0] - 1 <= value) {
+            ceiling[0] = Math.min(ceiling[0], value);
+            mergeIntervals(ceiling);
+        } else {
+            intervals.add(newInterval);
+        }
+    }
+    
+    public int[][] getIntervals() {
+        return intervals.toArray(new int[intervals.size()][]);
+    }
+    
+    private void mergeIntervals(int[] interval) {
+        int[] next = intervals.higher(interval);
+        if (next != null && next[0] - 1 <= interval[1]) {
+            interval[1] = Math.max(interval[1], next[1]);
+            intervals.remove(next);
+            mergeIntervals(interval);
+        }
+    }
+}
