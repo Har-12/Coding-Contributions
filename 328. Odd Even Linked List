@@ -1,0 +1,16 @@
+public ListNode oddEvenList(ListNode head) {
+        if (head == null) return head;
+        
+        ListNode evenHead = head.next, oddWalker = head, evenWalker = evenHead;
+        
+        while(evenWalker != null && evenWalker.next != null) {
+            oddWalker.next = oddWalker.next.next;
+            evenWalker.next = evenWalker.next.next;
+            oddWalker = oddWalker.next;
+            evenWalker = evenWalker.next;
+        }
+        
+        oddWalker.next = evenHead;
+        
+        return head;
+    }
