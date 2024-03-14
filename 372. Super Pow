@@ -1,0 +1,23 @@
+class Solution {
+    public int superPow(int a, int[] b) {
+        int result = 1;
+        for (int digit : b) {
+            result = pow(result, 10) * pow(a, digit) % 1337;
+        }
+        return result;
+    }
+    
+    // Helper method to calculate (x^y) modulo 1337 using binary exponentiation
+    private int pow(int x, int y) {
+        int result = 1;
+        x %= 1337;
+        while (y > 0) {
+            if (y % 2 == 1) {
+                result = (result * x) % 1337;
+            }
+            y /= 2;
+            x = (x * x) % 1337;
+        }
+        return result;
+    }
+}
