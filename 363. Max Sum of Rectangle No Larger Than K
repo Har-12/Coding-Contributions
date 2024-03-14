@@ -1,0 +1,46 @@
+class Solution {
+    public int maxSumSubmatrix(int[][] matrix, int k) {
+        int[][] prefixSums = calculatePrefixSums(matrix);
+        return maxSum(prefixSums, k);
+    }
+    
+    private int maxSum(int[][] prefixSums, int k) {
+        int n = prefixSums.length;
+        int m = prefixSums[0].length;
+        int answer = Integer.MIN_VALUE;
+        
+        for (int x = 1; x < m; x++) {
+            for (int l = 0; l < x; l++) {
+                TreeSet<Integer> set = new TreeSet<>();
+                set.add(0);
+
+                for (int y = 1; y < n; y++) {
+                    int totalSum = prefixSums[y][x] - prefixSums[y][l];
+                    Integer previous = set.ceiling(totalSum - k);
+
+                    if (previous != null) {
+                        answer = Math.max(answer, totalSum - previous);
+                    }
+
+                    set.add(totalSum);
+                }
+            }
+        }
+        
+        return answer;
+    }
+    
+    private int[][] calculatePrefixSums(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[][] prefixSums = new int[n + 1][m + 1];
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                prefixSums[i][j] = prefixSums[i][j-1] + prefixSums[i-1][j] + matrix[i-1][j-1] - prefixSums[i-1][j-1];
+            }
+        }
+        
+        return prefixSums;
+    }
+}
