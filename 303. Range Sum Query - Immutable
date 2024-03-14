@@ -1,0 +1,31 @@
+class NumArray {
+    int[] array;
+    public NumArray(int[] nums) {
+        if(nums.length > 0) {
+            array = new int[nums.length];
+            array[0] = nums[0];
+            for(int i = 1; i < nums.length; ++i) {
+                array[i] = array[i - 1] + nums[i];
+            }
+        }
+    }
+
+    public int sumRange(int i, int j) {
+        if (i < 0 || j > array.length) {
+            return 0;
+        }
+        if (i == 0) {
+            return array[j];
+        }
+        return array[j] - array[i - 1];
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {-2, 0, 3, -5, 2, -1};
+        int i = 0;
+        int j = 5;
+        NumArray obj = new NumArray(nums);
+        int param_1 = obj.sumRange(i,j);
+        System.out.println(param_1);
+    }
+}
