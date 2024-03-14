@@ -1,0 +1,34 @@
+import java.util.*;
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> countMap = new HashMap<>();
+        
+        for (int num : nums) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        
+        TreeMap<Integer, List<Integer>> freqMap = new TreeMap<>();
+        
+        for (int num : countMap.keySet()) {
+            int freq = countMap.get(num);
+            freqMap.computeIfAbsent(freq, key -> new ArrayList<>()).add(num);
+        }
+        
+        List<Integer> result = new ArrayList<>();
+        for (int freq : freqMap.descendingKeySet()) {
+            List<Integer> numsWithFreq = freqMap.get(freq);
+            result.addAll(numsWithFreq);
+            if (result.size() >= k) {
+                break;
+            }
+        }
+        
+        int[] topK = new int[k];
+        for (int i = 0; i < k; i++) {
+            topK[i] = result.get(i);
+        }
+        
+        return topK;
+    }
+}
