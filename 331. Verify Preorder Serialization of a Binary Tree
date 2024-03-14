@@ -1,0 +1,42 @@
+class Solution {
+   public boolean isValidSerialization(String preorder) {
+
+    if(preorder.length()==1 && preorder.charAt(0)=='#'){
+        return true;
+    }
+    
+    Deque<Boolean> stackObj = new ArrayDeque<Boolean>();
+    
+   String[] nodes= preorder.split(",");
+    
+    for(int i=0;i<nodes.length;i++){
+        
+        if(nodes[i].equals("#")){
+            
+            if(stackObj.isEmpty()){
+                return false;
+            }else{
+                
+               while(!stackObj.isEmpty() && stackObj.getFirst()){
+                stackObj.removeFirst();
+               }
+                
+                if(!stackObj.isEmpty()){
+                    stackObj.removeFirst();
+                    stackObj.addFirst(true);
+                }else if(i+1<nodes.length){
+                    return false;
+                }
+            }
+        }else{
+            stackObj.addFirst(false);
+        }
+    }
+    
+    if(stackObj.isEmpty()){
+        return true;
+    }
+    
+    return false;
+}
+}
