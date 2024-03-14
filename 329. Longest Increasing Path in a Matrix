@@ -1,0 +1,38 @@
+class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        if(matrix.length==0) return 0;
+        Integer[][] max = new Integer[matrix.length][matrix[0].length];
+        int maxmax = 0;
+        for(int i = 0; i<matrix.length; i++){
+            for(int j = 0; j<matrix[0].length; j++){
+                dfs(matrix, max, i, j);
+                maxmax = Math.max(maxmax, max[i][j]);
+            }
+        }
+        return maxmax;
+    }
+    public int dfs(int[][] matrix, Integer[][] max, int y, int x){
+        if(max[y][x]==null){
+            int max_dist = 0;
+            int target = matrix[y][x];
+            if(y-1>=0 && matrix[y-1][x]>target){
+                dfs(matrix, max, y-1, x);
+                max_dist = Math.max(max_dist, max[y-1][x]);
+            }
+            if(y+1<matrix.length && matrix[y+1][x]>target){
+                dfs(matrix, max, y+1, x);
+                max_dist = Math.max(max_dist, max[y+1][x]);
+            }
+            if(x-1>=0 && matrix[y][x-1]>target){
+                dfs(matrix, max, y, x-1);
+                max_dist = Math.max(max_dist, max[y][x-1]);
+            }
+            if(x+1<matrix[0].length && matrix[y][x+1]>target){
+                dfs(matrix, max, y, x+1);
+                max_dist = Math.max(max_dist, max[y][x+1]);
+            }
+            max[y][x] = max_dist+1;
+        }
+        return max[y][x];
+    }
+}
