@@ -1,0 +1,30 @@
+class Solution {
+    public int longestSubstring(String s, int k) {
+        return helper(s, k, 0, s.length() - 1);
+    }
+    
+    private static int helper(String s, int k, int lo, int hi){
+        if (lo > hi) return 0;
+        HashMap<Character, Integer> repeatNum = new HashMap<Character, Integer>();
+        for(int i = lo; i <= hi; i++){
+            int val = repeatNum.containsKey(s.charAt(i)) ? repeatNum.get(s.charAt(i)) + 1 : 1;
+            repeatNum.put(s.charAt(i), val);
+        }
+        HashMap<Character, Integer> lessK = new HashMap<>();
+        for(char ch : repeatNum.keySet()){
+            if(repeatNum.get(ch) < k){
+                lessK.put(ch, repeatNum.get(ch));
+            }
+        }       
+        
+        for(char ch : lessK.keySet()){
+            int midLeft = s.indexOf(ch, lo);
+            int midRight = midLeft;
+            for(int i = midLeft + 1; i <= hi; i++){
+                if(s.charAt(i) == s.charAt(midLeft))    midRight++;
+                else    break;
+            }
+            return Math.max(helper(s, k, lo, midLeft - 1), helper(s, k, midRight + 1, hi));
+        }
+        return hi - lo + 1;
+    }
