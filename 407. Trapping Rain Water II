@@ -1,0 +1,72 @@
+class Solution {
+    
+     class Coordinates{
+        int row;
+        int col;
+        
+        public Coordinates(int r, int c){
+            this.row = r;
+            this.col = c;
+        }
+        
+    }
+
+    int[] top =    {0, 0, 1, -1};
+    int[] bottom = {1,-1, 0, 0};
+    
+    public int trapRainWater(int[][] heightMap) {
+        int m = heightMap.length;
+        int n = heightMap[0].length;
+        
+        boolean [][] visited = new boolean[m][n];
+
+        PriorityQueue<Coordinates> pq = new PriorityQueue<Coordinates>(
+            (a,b) -> heightMap[a.row][a.col] - heightMap[b.row][b.col]);
+        
+        int water = 0;
+        pushToQueue(pq, heightMap, visited, m, n);
+        int max = Integer.MIN_VALUE;
+
+        while(pq.size()>0)
+        {
+            Coordinates element = pq.poll();
+            int x = element.row;
+            int y = element.col;
+            int val = heightMap[x][y];
+            
+            max = Math.max(max, val);
+            
+            for(int i=0;i<4;i++)
+            {
+                int t = x + top[i];
+                int b = y + bottom[i];
+                
+                if(t<0 || t>=m || b<0 || b>=n || visited[t][b])
+                    continue;
+                pq.offer(new Coordinates(t,b));
+                visited[t][b] = true;
+            }
+            
+            if(heightMap[x][y] < max)
+                water += max - heightMap[x][y];
+        }
+        return water;
+    }
+
+    void pushToQueue(PriorityQueue<Coordinates> pq, int [][]heightMap, 
+                     boolean[][] visited,int m, int n)
+    {
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(i==0 || j==0 || i == m-1 || j==n-1)
+                {
+                    pq.offer(new Coordinates(i,j));
+                    visited[i][j] = true;
+                }
+            }
+        }
+    }
+    
+}
