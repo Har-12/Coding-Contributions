@@ -1,0 +1,20 @@
+class Solution {
+    public int hammingDistance(int x, int y) {
+        String xout="",yout="";
+          int binaryx[] = new int[31],binaryy[] = new int[31];    
+        int cntx=0,cnty=0,count=0;
+        while(x>0){
+        binaryx[cntx++]=x%2;
+            x/=2;
+        }
+        while(y>0){
+       binaryy[cnty++]=y%2;
+            y/=2;
+        }
+         for(int i=0;i<31;i++){
+            if(binaryx[i]!=binaryy[i])
+                count++;
+        }
+           return count;
+    }
+}
