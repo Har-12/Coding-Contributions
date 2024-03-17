@@ -1,0 +1,14 @@
+-- Assuming 'activity' is a table in MySQL with columns: player_id, event_date
+
+-- SQL query to perform group by 'player_id' and find the minimum 'event_date' for each player
+SELECT player_id, MIN(event_date) AS first_login
+FROM activity
+GROUP BY player_id;
+
+
+
+
+
+
+
+sql
