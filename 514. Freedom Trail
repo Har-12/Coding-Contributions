@@ -1,0 +1,19 @@
+public int findRotateSteps(String ring, String key) {
+        return dfs(ring.toCharArray(), 0, key.toCharArray(), 0, new int[ring.length()][key.length()]);
+    }
+    
+    private int dfs(char[] ring, int pos, char[] key, int idx, int[][] mem) {
+        if (idx == key.length) 
+            return 0;
+        if (mem[pos][idx] > 0) 
+            return mem[p][idx];
+        int minSteps = Integer.MAX_VALUE;
+        for (int i = 0; i < ring.length; i++) {
+            if (ring[i] == key[idx]) {
+                int distance = Math.min(Math.abs(i - pos), ring.length - Math.abs(i - pos));
+                minSteps = Math.min(minSteps, distance + 1 + dfs(ring, i, key, idx + 1, mem));
+            }
+        }
+        mem[pos][idx] = minSteps;
+        return mem[pos][idx];
+    }
