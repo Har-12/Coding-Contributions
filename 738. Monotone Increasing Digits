@@ -1,0 +1,23 @@
+class Solution {
+    public int monotoneIncreasingDigits(int n) {
+        // Convert the number to a character array
+        char[] digits = Integer.toString(n).toCharArray();
+        int length = digits.length;
+        
+        // Start from the highest digit and iterate through each digit
+        for (int i = length - 1; i > 0; i--) {
+            // If the current digit is greater than the next digit
+            if (digits[i] < digits[i - 1]) {
+                // Decrement the current digit by 1
+                digits[i - 1]--;
+                // Set all subsequent digits to '9'
+                for (int j = i; j < length; j++) {
+                    digits[j] = '9';
+                }
+            }
+        }
+        
+        // Convert the character array back to an integer
+        return Integer.parseInt(new String(digits));
+    }
+}
