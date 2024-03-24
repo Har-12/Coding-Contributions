@@ -1,0 +1,52 @@
+import java.math.BigInteger;
+
+public class Solution {
+    public int superpalindromesInRange(String left, String right) {
+        long leftNum = Long.parseLong(left);
+        long rightNum = Long.parseLong(right);
+        int count = 0;
+
+        // Check odd length palindromes
+        for (int i = 1; i < 10_0000; i++) {
+            StringBuilder oddRoot = new StringBuilder(Integer.toString(i));
+            StringBuilder square = new StringBuilder(oddRoot).reverse().insert(0, oddRoot);
+            long squareNum = Long.parseLong(square.toString());
+            squareNum *= squareNum;
+            if (squareNum > rightNum) {
+                break;
+            }
+            if (squareNum >= leftNum && isPalindrome(squareNum)) {
+                count++;
+            }
+        }
+
+        // Check even length palindromes
+        for (int i = 1; i < 10_0000; i++) {
+            StringBuilder evenRoot = new StringBuilder(Integer.toString(i));
+            StringBuilder square = new StringBuilder(evenRoot).reverse().insert(0, evenRoot.substring(0, evenRoot.length() - 1));
+            long squareNum = Long.parseLong(square.toString());
+            squareNum *= squareNum;
+            if (squareNum > rightNum) {
+                break;
+            }
+            if (squareNum >= leftNum && isPalindrome(squareNum)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private boolean isPalindrome(long num) {
+        String numStr = Long.toString(num);
+        int left = 0, right = numStr.length() - 1;
+        while (left < right) {
+            if (numStr.charAt(left) != numStr.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
