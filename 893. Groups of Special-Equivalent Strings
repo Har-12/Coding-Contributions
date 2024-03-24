@@ -1,0 +1,10 @@
+from typing import List
+
+class Solution:
+    def numSpecialEquivGroups(self, words: List[str]) -> int:
+        unique_representations = set()
+        for word in words:
+            even_chars = ''.join(sorted(word[::2]))
+            odd_chars = ''.join(sorted(word[1::2]))
+            unique_representations.add(even_chars + odd_chars)
+        return len(unique_representations)
