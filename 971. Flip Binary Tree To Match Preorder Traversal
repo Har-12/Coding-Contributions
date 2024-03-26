@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Solution {
+    List<Integer> flippedNodes = new ArrayList<>();
+    int index = 0;
+
+    public List<Integer> flipMatchVoyage(TreeNode root, int[] voyage) {
+        if (dfs(root, voyage)) {
+            return flippedNodes;
+        } else {
+            return Arrays.asList(-1);
+        }
+    }
+
+    private boolean dfs(TreeNode node, int[] voyage) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val != voyage[index++]) {
+            return false;
+        }
+        if (node.left != null && node.left.val != voyage[index]) {
+            flippedNodes.add(node.val);
+            return dfs(node.right, voyage) && dfs(node.left, voyage);
+        }
+        return dfs(node.left, voyage) && dfs(node.right, voyage);
+    }
+}
