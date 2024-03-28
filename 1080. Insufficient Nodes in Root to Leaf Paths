@@ -1,0 +1,23 @@
+class Solution {
+    public TreeNode sufficientSubset(TreeNode root, int limit) {
+        if (root == null) {
+            return null;
+        }
+        
+        // Check if the current node is a leaf node
+        if (root.left == null && root.right == null) {
+            return root.val < limit ? null : root;
+        }
+        
+        // Recursively prune left and right subtrees
+        root.left = sufficientSubset(root.left, limit - root.val);
+        root.right = sufficientSubset(root.right, limit - root.val);
+        
+        // If both left and right subtrees are pruned, return null
+        if (root.left == null && root.right == null) {
+            return null;
+        }
+        
+        return root;
+    }
+}
