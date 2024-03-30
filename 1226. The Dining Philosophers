@@ -1,0 +1,18 @@
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+class DiningPhilosophers {
+    private final Lock mutex = new ReentrantLock();
+
+    public void wantsToEat(int philosopher, Runnable pickLeftFork,
+                           Runnable pickRightFork, Runnable eat,
+                           Runnable putLeftFork, Runnable putRightFork) {
+        mutex.lock();
+        pickLeftFork.run();
+        pickRightFork.run();
+        eat.run();
+        putLeftFork.run();
+        putRightFork.run();
+        mutex.unlock();
+    }
+}
