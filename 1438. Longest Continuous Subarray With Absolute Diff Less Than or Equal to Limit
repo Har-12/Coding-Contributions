@@ -1,0 +1,29 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int longestSubarray(int[] nums, int limit) {
+        int ans = 1;
+        Deque<Integer> minQ = new ArrayDeque<>();
+        Deque<Integer> maxQ = new ArrayDeque<>();
+
+        for (int l = 0, r = 0; r < nums.length; ++r) {
+            while (!minQ.isEmpty() && minQ.peekLast() > nums[r])
+                minQ.pollLast();
+            minQ.offerLast(nums[r]);
+            while (!maxQ.isEmpty() && maxQ.peekLast() < nums[r])
+                maxQ.pollLast();
+            maxQ.offerLast(nums[r]);
+            while (!maxQ.isEmpty() && !minQ.isEmpty() && maxQ.peekFirst() - minQ.peekFirst() > limit) {
+                if (minQ.peekFirst() == nums[l])
+                    minQ.pollFirst();
+                if (maxQ.peekFirst() == nums[l])
+                    maxQ.pollFirst();
+                ++l;
+            }
+            ans = Math.max(ans, r - l + 1);
+        }
+
+        return ans;
+    }
+}
